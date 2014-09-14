@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2013
+VisualStudioVersion = 12.0.30501.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AutoConfiguration", "AutoConfiguration\AutoConfiguration.csproj", "{F64C3B2F-48E2-461E-836B-31E1D694255C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AutoConfiguration.TestClient", "AutoConfiguration.TestClient\AutoConfiguration.TestClient.csproj", "{012AE5B7-57C0-4612-8508-7087C077F07D}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{F64C3B2F-48E2-461E-836B-31E1D694255C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F64C3B2F-48E2-461E-836B-31E1D694255C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F64C3B2F-48E2-461E-836B-31E1D694255C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F64C3B2F-48E2-461E-836B-31E1D694255C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{012AE5B7-57C0-4612-8508-7087C077F07D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{012AE5B7-57C0-4612-8508-7087C077F07D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{012AE5B7-57C0-4612-8508-7087C077F07D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{012AE5B7-57C0-4612-8508-7087C077F07D}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
