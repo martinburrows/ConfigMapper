@@ -17,7 +17,7 @@ namespace AutoConfiguration
         };
         */
 
-        internal static void SetValue(object obj, string fieldname, string value)
+        /*internal static void SetValue(object obj, string fieldname, string value)
         {
             var type = obj.GetType();
             var field = type.GetField(fieldname, BindingFlags.NonPublic | BindingFlags.Instance);
@@ -28,7 +28,7 @@ namespace AutoConfiguration
                             .Single(m => m.Name.StartsWith("To") && m.ReturnType == fieldType && m.GetParameters().Last().ParameterType == typeof(string));
 
             field.SetValue(obj, convertMethod.Invoke(null, new object[] { value }));
-        }
+        }*/
 
         protected internal void SetValue(string fieldname, string value)
         {
@@ -76,7 +76,10 @@ namespace AutoConfiguration
 
             var generatedType = typeBuilder.CreateType();
 
-            return (T)Activator.CreateInstance(generatedType);
+            var instance = Activator.CreateInstance(generatedType);
+
+
+            return (T) instance;
         }
 
         /*//TODO: decimal, unsigned forms http://en.wikipedia.org/wiki/List_of_CIL_instructions
@@ -87,27 +90,27 @@ namespace AutoConfiguration
         private static void GenerateProperty<T>(TypeBuilder typeBuilder, ILGenerator constructorIL, PropertyInfo property)
         {
             var propertyType = property.PropertyType;
- 
+
+            var fieldName = "_" + property.Name;
             var fieldBuilder = typeBuilder.DefineField(
-                "_" + property.Name,
+                fieldName,
                 propertyType,
                 FieldAttributes.Private);
 
 
             
-           /* constructorIL.Emit(OpCodes.Ldarg_0);
-            constructorIL.Emit(OpCodes.Ldstr, fieldBuilder.Name);
+            constructorIL.Emit(OpCodes.Ldstr, fieldName);
             constructorIL.Emit(OpCodes.Ldstr, ConfigurationManager.AppSettings[property.Name]);
-            constructorIL.EmitCall(OpCodes.Callvirt, setValueMethod, null);
-            */
+            constructorIL.EmitCall(OpCodes.Call, SetValueMethod, null);
+            
             
 
-            constructorIL.Emit(OpCodes.Ldstr, ConfigurationManager.AppSettings[property.Name]);
-            constructorIL.Emit(OpCodes.Stfld, fieldBuilder);
+            /*constructorIL.Emit(OpCodes.Ldstr, ConfigurationManager.AppSettings[property.Name]);
+            constructorIL.Emit(OpCodes.Stfld, fieldBuilder);*/
 
 
-            /*
-            constructorIL.Emit(OpCodes.Ldstr, fieldBuilder.Name);
+            
+            /*constructorIL.Emit(OpCodes.Ldstr, fieldBuilder.Name);
             constructorIL.Emit(OpCodes.Ldstr, ConfigurationManager.AppSettings[property.Name]);
             constructorIL.Emit(OpCodes.Call, SetValueMethod);*/
 
@@ -185,10 +188,10 @@ namespace AutoConfiguration
             _assemblyBuilder =
                 AppDomain.CurrentDomain.DefineDynamicAssembly(
                     assemblyName,
-                    AssemblyBuilderAccess.RunAndSave);
+                    AssemblyBuilderAccess.Run);
 
             var moduleBuilder =
-                _assemblyBuilder.DefineDynamicModule(assemblyName.Name, assemblyName.Name + ".dll");
+                _assemblyBuilder.DefineDynamicModule(assemblyName.Name);
 
             var typeBuilder = moduleBuilder.DefineType(
             "AutoConfiguration",
