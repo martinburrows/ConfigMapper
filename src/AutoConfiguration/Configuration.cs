@@ -14,18 +14,16 @@ namespace AutoConfiguration
             foreach (var property in type.GetProperties(BindingFlags.Instance | BindingFlags.Public))
             {
                 var field = type.GetField("_" + property.Name, BindingFlags.Instance | BindingFlags.NonPublic);
-                SetFieldValue(field, ConfigurationManager.AppSettings[property.Name]);
+
+                if (ConfigurationManager.AppSettings.AllKeys.Contains(property.Name))
+                    SetFieldValue(field, ConfigurationManager.AppSettings[property.Name]);
             }
         }
 
         private void SetFieldValue(FieldInfo field, string value)
         {
-            var fieldType = field.FieldType;
-            
-            var convertMethod = typeof(Convert).GetMethods(BindingFlags.Public | BindingFlags.Static)
-                .Single(m => m.Name.StartsWith("To") && m.ReturnType == fieldType && m.GetParameters().Last().ParameterType == typeof(string));
-
-            field.SetValue(this, convertMethod.Invoke(null, new object[] { value }));
+            field.SetValue(this,
+                field.FieldType.IsEnum ? Enum.Parse(field.FieldType, value) : Convert.ChangeType(value, field.FieldType));
         }
     }
 }

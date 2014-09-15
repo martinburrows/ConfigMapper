@@ -26,6 +26,18 @@ namespace AutoConfiguration.TestClient
         bool TestBoolT2 { get; }
     }
 
+
+    public enum Colour
+    {
+        Red,
+        Green,
+        Blue
+    }
+    public interface IEnumConfiguration
+    {
+        Colour Colour { get; }        
+    }
+
     class Program
     {
         static void Main(string[] args)
@@ -44,12 +56,16 @@ namespace AutoConfiguration.TestClient
             
             var configuration3 = ConfigurationReader.Read<IDoubleDecimalConfiguration>();
             Console.WriteLine(configuration3.TestDecimal);
-            Console.WriteLine(configuration3.TestDouble);
+            Console.WriteLine(configuration3.TestDouble * 2);
 
             var configuration4 = ConfigurationReader.Read<IBoolConfiguration>();
             Console.WriteLine(configuration4.TestBoolT);
             Console.WriteLine(configuration4.TestBoolF);
             Console.WriteLine(configuration4.TestBoolT);
+
+            var configuration5 = ConfigurationReader.Read<IEnumConfiguration>();
+            Console.WriteLine(configuration5.Colour);
+            
             Console.ReadKey();
         }
     }
