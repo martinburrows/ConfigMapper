@@ -15,7 +15,7 @@ namespace ConfigMapping.Exceptions
 
         public override string Message
         {
-            get { return string.Format("Failed to map field \"{0}\" - {1}", _field, _message ); }
+            get { return string.Format("Failed to map field '{0}' - {1}", _field, _message ); }
         }
     }
 }

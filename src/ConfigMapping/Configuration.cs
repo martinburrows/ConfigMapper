@@ -9,7 +9,7 @@ namespace ConfigMapping
     // using non-standard method names to avoid clashes with app settings of the same names
     public abstract class Configuration
     {
-        protected internal void ___InitialiseFieldValues()
+        protected internal void ___InitialiseFieldValues(bool ignoreMissingEntries = false)
         {
             var type = this.GetType();
 
@@ -17,18 +17,24 @@ namespace ConfigMapping
             {
                 var field = type.GetField("_" + property.Name, BindingFlags.Instance | BindingFlags.NonPublic);
 
-                if (ConfigurationManager.AppSettings.AllKeys.Contains(property.Name))
-                    ___SetFieldValue(field, property);
-                else 
+                var configKey = ConfigurationManager.AppSettings.AllKeys.SingleOrDefault(c => c.Equals(property.Name, StringComparison.OrdinalIgnoreCase));
+
+                if (configKey == null)
+                {
+                    if (ignoreMissingEntries)
+                        continue;
                     throw new ConfigMappingException("No matching key in appSettings could be found", property.Name);
+                }
+
+                ___SetFieldValue(field, configKey);
             }
         }
 
-        private void ___SetFieldValue(FieldInfo field, PropertyInfo property)
+        private void ___SetFieldValue(FieldInfo field, string configKey)
         {
             try
             {
-                var value = ConfigurationManager.AppSettings[property.Name];
+                var value = ConfigurationManager.AppSettings[configKey];
 
                 field.SetValue(this,
                     field.FieldType.IsEnum
@@ -37,7 +43,7 @@ namespace ConfigMapping
             }
             catch (Exception e)
             {
-                throw new ConfigMappingException(e.Message, property.Name);
+                throw new ConfigMappingException(e.Message, configKey);
             }
         }
     }
