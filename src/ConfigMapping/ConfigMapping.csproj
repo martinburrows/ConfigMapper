@@ -7,8 +7,8 @@
     <ProjectGuid>{F64C3B2F-48E2-461E-836B-31E1D694255C}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>ConfigMapper</RootNamespace>
-    <AssemblyName>ConfigMapper</AssemblyName>
+    <RootNamespace>ConfigMapping</RootNamespace>
+    <AssemblyName>ConfigMapping</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
@@ -42,7 +42,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Configuration.cs" />
-    <Compile Include="ConfigurationReader.cs" />
+    <Compile Include="ConfigMapper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

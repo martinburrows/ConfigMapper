@@ -2,14 +2,14 @@
 using System.Reflection;
 using System.Reflection.Emit;
 
-namespace ConfigMapper
+namespace ConfigMapping
 {
-    public class ConfigurationReader
+    public class ConfigMapper
     {
         /// <summary>
         /// Returns an implementation of the given interface with properties populated from the appSettings config section.
         /// </summary>
-        public static T Read<T>()
+        public static T Map<T>()
         {
             var typeBuilder = GetTypeBuilder<T>();
 
@@ -70,10 +70,6 @@ namespace ConfigMapper
             if (interfaceGetAccessor != null) typeBuilder.DefineMethodOverride(getAccessorMethodBuilder, interfaceGetAccessor);
 
             var getAccessorILGenerator = getAccessorMethodBuilder.GetILGenerator();
-
-            // For an instance property, argument zero is the instance. Load the  
-            // instance, then load the private field and return, leaving the 
-            // field value on the stack.
             getAccessorILGenerator.Emit(OpCodes.Ldarg_0);
             getAccessorILGenerator.Emit(OpCodes.Ldfld, fieldBuilder);
             getAccessorILGenerator.Emit(OpCodes.Ret);
@@ -91,8 +87,6 @@ namespace ConfigMapper
             if (interfaceSetAccessor != null) typeBuilder.DefineMethodOverride(setAccessorMethodBuiler, interfaceSetAccessor);
 
             var setAccessorILGenerator = setAccessorMethodBuiler.GetILGenerator();
-            // Load the instance and then the argument, then store the 
-            // argument in the field.
             setAccessorILGenerator.Emit(OpCodes.Ldarg_0);
             setAccessorILGenerator.Emit(OpCodes.Ldarg_1);
             setAccessorILGenerator.Emit(OpCodes.Stfld, fieldBuilder);
@@ -103,12 +97,12 @@ namespace ConfigMapper
 
         private static TypeBuilder GetTypeBuilder<T>()
         {
-            var assemblyName = new AssemblyName("DynamicConfigMapper");
+            var assemblyName = new AssemblyName("DynamicConfigMapping");
             var assemblyBuilder = AppDomain.CurrentDomain.DefineDynamicAssembly(assemblyName, AssemblyBuilderAccess.Run);
             var moduleBuilder = assemblyBuilder.DefineDynamicModule(assemblyName.Name);
 
             return moduleBuilder.DefineType(
-                name: "ConfigMapper", 
+                name: "ConfigMapping", 
                 attr: TypeAttributes.Public, 
                 parent: typeof(Configuration), 
                 interfaces: new[] { typeof(T) });

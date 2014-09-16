@@ -3,7 +3,7 @@ using System.Configuration;
 using System.Linq;
 using System.Reflection;
 
-namespace ConfigMapper
+namespace ConfigMapping
 {
     public abstract class Configuration
     {
