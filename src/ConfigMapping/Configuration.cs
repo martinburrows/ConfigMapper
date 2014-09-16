@@ -9,7 +9,7 @@ namespace ConfigMapping
     // using non-standard method names to avoid clashes with app settings of the same names
     public abstract class Configuration
     {
-        protected internal void ___InitialiseFieldValues(bool ignoreMissingEntries = false)
+        protected internal void ___InitialiseFieldValues()
         {
             var type = this.GetType();
 
@@ -21,8 +21,6 @@ namespace ConfigMapping
 
                 if (configKey == null)
                 {
-                    if (ignoreMissingEntries)
-                        continue;
                     throw new ConfigMappingException("No matching key in appSettings could be found", property.Name);
                 }
 
