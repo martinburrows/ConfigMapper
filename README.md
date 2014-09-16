@@ -1,2 +1,3 @@
-AutoConfiguration
+ConfigMapper
 =================
+ConfigMapper for .NET
