@@ -1,24 +1,71 @@
 ﻿using System;
+using System.Collections.Concurrent;
+using System.Configuration;
 using System.Reflection;
 using System.Reflection.Emit;
 
 namespace ConfigMapping
 {
-    public class ConfigMapper
+    public static class ConfigMapper
     {
+        private static readonly ConcurrentDictionary<Type, object> ExistingConfiguration;
+
+        static ConfigMapper()
+        {
+            ExistingConfiguration = new ConcurrentDictionary<Type, object>();
+        }
+ 
         /// <summary>
         /// Returns an implementation of the given interface with properties populated from the appSettings config section.
         /// </summary>
         public static T Map<T>()
         {
-            var typeBuilder = GetTypeBuilder<T>();
+            var type = typeof (T);
 
-            GenerateConstructor(typeBuilder);
+            return (T)ExistingConfiguration.GetOrAdd(type, t =>
+            {
+                if (ExistingConfiguration.ContainsKey(type))
+                    return (T) ExistingConfiguration[type];
 
-            foreach (var property in typeof (T).GetProperties())
-                GenerateProperty<T>(typeBuilder, property);
+                var typeBuilder = GetTypeBuilder<T>();
 
-            return (T)Activator.CreateInstance(typeBuilder.CreateType());
+                GenerateConstructor(typeBuilder);
+
+                foreach (var property in typeof (T).GetProperties())
+                    GenerateProperty<T>(typeBuilder, property);
+
+                return Activator.CreateInstance(typeBuilder.CreateType());
+            });
+        }
+
+        /// <summary>
+        /// Repopulates all configuration objects with fresh values from the appSettings config section.
+        /// </summary>
+        public static void RefreshConfiguration()
+        {
+            RefreshConfigurationManager();
+
+            foreach (var configuration in ExistingConfiguration)
+                ((Configuration)configuration.Value).___InitialiseFieldValues();
+        }
+
+        /// <summary>
+        /// Repopulates configuration objects of only the type provided with fresh values from the appSettings config section.
+        /// </summary>
+        public static void RefreshConfiguration<T>()
+        {
+            RefreshConfigurationManager();
+
+            var type = typeof (T);
+            if (ExistingConfiguration.ContainsKey(type))
+                ((Configuration)ExistingConfiguration[type]).___InitialiseFieldValues();
+            else
+                Map<T>();
+        }
+
+        private static void RefreshConfigurationManager()
+        {
+            ConfigurationManager.RefreshSection("appSettings");
         }
 
         private static void GenerateConstructor(TypeBuilder typeBuilder)
@@ -28,7 +75,7 @@ namespace ConfigMapping
                 CallingConventions.Standard,
                 Type.EmptyTypes);
 
-            var initialiseMethod = typeof(Configuration).GetMethod("InitialiseFieldValues", BindingFlags.NonPublic | BindingFlags.FlattenHierarchy | BindingFlags.Instance);
+            var initialiseMethod = typeof(Configuration).GetMethod("___InitialiseFieldValues", BindingFlags.NonPublic | BindingFlags.FlattenHierarchy | BindingFlags.Instance);
 
             var constructorIL = constructorBuilder.GetILGenerator();
             constructorIL.Emit(OpCodes.Ldarg_0);
@@ -90,8 +137,8 @@ namespace ConfigMapping
             setAccessorILGenerator.Emit(OpCodes.Ldarg_0);
             setAccessorILGenerator.Emit(OpCodes.Ldarg_1);
             setAccessorILGenerator.Emit(OpCodes.Stfld, fieldBuilder);
+            
             setAccessorILGenerator.Emit(OpCodes.Ret);
-
             propertyBuilder.SetSetMethod(setAccessorMethodBuiler);
         }
 
@@ -103,7 +150,7 @@ namespace ConfigMapping
 
             return moduleBuilder.DefineType(
                 name: "ConfigMapping", 
-                attr: TypeAttributes.Public, 
+                attr: TypeAttributes.Public | TypeAttributes.Sealed, 
                 parent: typeof(Configuration), 
                 interfaces: new[] { typeof(T) });
         }

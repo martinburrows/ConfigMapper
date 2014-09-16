@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
+  <metadata>
+    <id>ConfigMapper</id>
+    <title>ConfigMapper</title>
+    <version>0.0.2</version>
+    <authors>Martin Burrows</authors>
+    <owners>Martin Burrows</owners>
+    <summary>Provides interfaced configuration objects with properties mapped from appSettings, allowing your IConfiguration to be injected anywhere in your code in a unit-testable manner.</summary>
+    <description>Provides interfaced configuration objects with properties mapped from appSettings. This allows your IConfiguration to be injected anywhere in your code providing a unit-testable solution to configuration management.</description>
+    <projectUrl>https://github.com/martinjrb/ConfigMapper</projectUrl>
+    <tags>configuration config map mapper mapping setting settings</tags>
+    <licenseUrl>https://github.com/martinjrb/ConfigMapper/blob/master/LICENSE</licenseUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <releaseNotes>
+    </releaseNotes>
+    <copyright>Martin Burrows 2014</copyright>
+    <dependencies>
+    </dependencies>
+  </metadata>
+  <files>
+    <file src="*.dll" target="lib\net40" />
+  </files>
+</package>
