@@ -23,7 +23,7 @@ namespace ConfigMapping
                 {
                     throw new ConfigMappingException("No matching key in appSettings could be found", property.Name);
                 }
-
+                
                 ___SetFieldValue(field, configKey);
             }
         }
@@ -36,7 +36,7 @@ namespace ConfigMapping
 
                 field.SetValue(this,
                     field.FieldType.IsEnum
-                        ? Enum.Parse(field.FieldType, value)
+                        ? Enum.Parse(field.FieldType, value, true)
                         : Convert.ChangeType(value, field.FieldType));
             }
             catch (Exception e)
