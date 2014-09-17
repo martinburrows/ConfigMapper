@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <meta name="description" content="ConfigMapper : Simple .NET config to object mapping">
+
+    <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
+
+    <title>ConfigMapper</title>
+  </head>
+
+  <body>
+
+    <!-- HEADER -->
+    <div id="header_wrap" class="outer">
+        <header class="inner">
+          <a id="forkme_banner" href="https://github.com/martinjrb/ConfigMapper">View on GitHub</a>
+
+          <h1 id="project_title">ConfigMapper</h1>
+          <h2 id="project_tagline">Simple .NET config to object mapping</h2>
+
+            <section id="downloads">
+              <a class="zip_download_link" href="https://github.com/martinjrb/ConfigMapper/zipball/master">Download this project as a .zip file</a>
+              <a class="tar_download_link" href="https://github.com/martinjrb/ConfigMapper/tarball/master">Download this project as a tar.gz file</a>
+            </section>
+        </header>
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <div id="main_content_wrap" class="outer">
+      <section id="main_content" class="inner">
+        <h3>
+<a name="install-from-nuget" class="anchor" href="#install-from-nuget"><span class="octicon octicon-link"></span></a>Install from <a href="https://www.nuget.org/packages/ConfigMapper">NuGet</a>
+</h3>
+
+<pre><code>PM&gt; Install-Package ConfigMapper
+</code></pre>
+
+<p>ConfigMapper for .NET provides interfaced configuration objects with properties mapped from <code>appSettings</code>, allowing your <code>IConfiguration</code> to be injected anywhere in your code in a unit-testable manner.</p>
+
+<h4>
+<a name="usage" class="anchor" href="#usage"><span class="octicon octicon-link"></span></a>Usage</h4>
+
+<pre><code>public interface IConfiguration
+{
+    string KeyInAppSettings { get; }
+    decimal WorksWithManyTypes { get; }
+    MyEnum AlsoWorksWithEnums { get; }
+}
+
+IConfiguration configuration = ConfigMapper.Map&lt;IConfiguration&gt;();
+</code></pre>
+
+<p>Usage is simple. Configure your DI to inject <code>IConfiguration</code> using the Map method into any class. The code above assumes we defined <code>MyEnum</code> somewhere and we have our config file as:</p>
+
+<pre><code>&lt;appSettings&gt;
+  &lt;add key="KeyInAppSettings" value="Foo"/&gt;
+  &lt;add key="WorksWithManyTypes" value="42.0"/&gt;
+  &lt;add key="AlsoWorksWithEnums" value="Bar"/&gt;
+&lt;/appSettings&gt;
+</code></pre>
+
+<p>Anything the System.Convert class can handle is accepted, in addition to enums.</p>
+
+<h4>
+<a name="efficiency" class="anchor" href="#efficiency"><span class="octicon octicon-link"></span></a>Efficiency</h4>
+
+<p>ConfigMapper is thread-safe, and only one concrete instance from an interface is ever generated, meaning you can call the <code>Map&lt;T&gt;</code> method any number of times in your code without increased memory usage.</p>
+
+<h4>
+<a name="config-change-handling" class="anchor" href="#config-change-handling"><span class="octicon octicon-link"></span></a>Config Change Handling</h4>
+
+<p>Call <code>ConfigMapper.RefreshConfiguration</code> if your configuration has changed. Any previously mapped objects will be updated with the latest values from your configuration without needing to re-map them.</p>
+      </section>
+    </div>
+
+    <!-- FOOTER  -->
+    <div id="footer_wrap" class="outer">
+      <footer class="inner">
+        <p class="copyright">ConfigMapper maintained by <a href="https://github.com/martinjrb">martinjrb</a></p>
+        <p>Published with <a href="http://pages.github.com">GitHub Pages</a></p>
+      </footer>
+    </div>
+
+              <script type="text/javascript">
+            var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+            document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+          </script>
+          <script type="text/javascript">
+            try {
+              var pageTracker = _gat._getTracker("UA-54893147-1");
+            pageTracker._trackPageview();
+            } catch(err) {}
+          </script>
+
+
+  </body>
+</html>
