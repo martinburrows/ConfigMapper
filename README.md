@@ -37,7 +37,7 @@ Anything the System.Convert class can handle is accepted, in addition to enums.
 Efficiency
 ------
 
-ConfigMapper is thread-safe, and only one concrete instance of an interface is ever generated, meaning you can call the ```Map<T>``` method any number of times in your code without increased memory usage.
+ConfigMapper is thread-safe, and only one concrete instance from an interface is ever generated, meaning you can call the ```Map<T>``` method any number of times in your code without increased memory usage.
 
 Config Change Handling
 ------
