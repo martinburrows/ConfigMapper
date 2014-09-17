@@ -51,16 +51,21 @@ namespace ConfigMapping
 
         /// <summary>
         /// Repopulates configuration objects of only the type provided with fresh values from the appSettings config section.
+        /// <returns>
+        /// The refreshed configuration of the given type
+        /// </returns>
         /// </summary>
-        public static void RefreshConfiguration<T>()
+        public static T RefreshConfiguration<T>()
         {
             RefreshConfigurationManager();
 
             var type = typeof (T);
-            if (ExistingConfiguration.ContainsKey(type))
-                ((Configuration)ExistingConfiguration[type]).___InitialiseFieldValues();
-            else
-                Map<T>();
+
+            if (!ExistingConfiguration.ContainsKey(type)) return Map<T>();
+
+            var configuration = ExistingConfiguration[type];
+            ((Configuration)configuration).___InitialiseFieldValues();
+            return (T)configuration;
         }
 
         private static void RefreshConfigurationManager()
@@ -99,8 +104,8 @@ namespace ConfigMapping
 
             var propertyBuilder = typeBuilder.DefineProperty(
                 name: interfaceProperty.Name, 
-                attributes: PropertyAttributes.HasDefault, 
-                returnType: typeof(string),
+                attributes: PropertyAttributes.HasDefault,
+                returnType: propertyType,
                 parameterTypes: Type.EmptyTypes);
 
             var getAccessorName = "get_" + interfaceProperty.Name;

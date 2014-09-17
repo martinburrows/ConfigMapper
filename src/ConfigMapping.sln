@@ -5,6 +5,8 @@ VisualStudioVersion = 12.0.30501.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConfigMapping", "ConfigMapping\ConfigMapping.csproj", "{F64C3B2F-48E2-461E-836B-31E1D694255C}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConfigMapping.Test.Unit", "ConfigMapping.Test.Unit\ConfigMapping.Test.Unit.csproj", "{E8FE7069-FFED-4597-8766-70E59842C3EA}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{F64C3B2F-48E2-461E-836B-31E1D694255C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F64C3B2F-48E2-461E-836B-31E1D694255C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F64C3B2F-48E2-461E-836B-31E1D694255C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E8FE7069-FFED-4597-8766-70E59842C3EA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E8FE7069-FFED-4597-8766-70E59842C3EA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E8FE7069-FFED-4597-8766-70E59842C3EA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E8FE7069-FFED-4597-8766-70E59842C3EA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
