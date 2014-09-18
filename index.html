@@ -38,7 +38,7 @@
 <pre><code>PM&gt; Install-Package ConfigMapper
 </code></pre>
 
-<p>ConfigMapper for .NET provides interfaced configuration objects with properties mapped from <code>appSettings</code>, allowing your <code>IConfiguration</code> to be injected anywhere in your code in a unit-testable manner.</p>
+<p>ConfigMapper for .NET provides interfaced configuration objects with properties mapped from <code>appSettings</code>, allowing your <code>IConfiguration</code> to be injected anywhere in your code in a unit-testable manner with no <a href="http://www.wekeroad.com/2011/03/10/are-friends-immutable/">magic strings</a> in sight.</p>
 
 <h4>
 <a name="usage" class="anchor" href="#usage"><span class="octicon octicon-link"></span></a>Usage</h4>
@@ -49,8 +49,9 @@
     decimal WorksWithManyTypes { get; }
     MyEnum AlsoWorksWithEnums { get; }
 }
+</code></pre>
 
-IConfiguration configuration = ConfigMapper.Map&lt;IConfiguration&gt;();
+<pre><code>IConfiguration configuration = ConfigMapper.Map&lt;IConfiguration&gt;();
 </code></pre>
 
 <p>Usage is simple. Configure your DI to inject <code>IConfiguration</code> using the Map method into any class. The code above assumes we defined <code>MyEnum</code> somewhere and we have our config file as:</p>
