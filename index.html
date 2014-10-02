@@ -41,7 +41,7 @@
 <p>ConfigMapper for .NET provides interfaced configuration objects with properties mapped from <code>appSettings</code>, allowing your <code>IConfiguration</code> to be injected anywhere in your code in a unit-testable manner with no <a href="http://www.wekeroad.com/2011/03/10/are-friends-immutable/">magic strings</a> in sight.</p>
 
 <h4>
-<a name="usage" class="anchor" href="#usage"><span class="octicon octicon-link"></span></a>Usage</h4>
+<a name="usage-is-simple" class="anchor" href="#usage-is-simple"><span class="octicon octicon-link"></span></a>Usage is simple.</h4>
 
 <pre><code>public interface IConfiguration
 {
@@ -54,7 +54,7 @@
 <pre><code>IConfiguration configuration = ConfigMapper.Map&lt;IConfiguration&gt;();
 </code></pre>
 
-<p>Usage is simple. Configure your DI to inject <code>IConfiguration</code> using the Map method into any class. The code above assumes we defined <code>MyEnum</code> somewhere and we have our config file as:</p>
+<p>Configure your DI to inject <code>IConfiguration</code> using the Map method into any class. The code above assumes we defined <code>MyEnum</code> somewhere and we have our config file as:</p>
 
 <pre><code>&lt;appSettings&gt;
   &lt;add key="KeyInAppSettings" value="Foo"/&gt;
@@ -64,6 +64,20 @@
 </code></pre>
 
 <p>Any Type the <code>System.Convert</code> class can handle is accepted, in addition to enums.</p>
+
+<h4>
+<a name="prefer-to-use-without-injection-thats-fine-too" class="anchor" href="#prefer-to-use-without-injection-thats-fine-too"><span class="octicon octicon-link"></span></a>Prefer to use without injection? That's fine too.</h4>
+
+<p>Place this class in your project root for ease of access and call it from anywhere:</p>
+
+<pre><code>public static class Configuration
+{
+  public static IConfiguration Current = ConfigMapper.Map&lt;IConfiguration&gt;();
+}
+</code></pre>
+
+<pre><code>var myConfigValue = Configuration.Current.MyConfigKey;
+</code></pre>
 
 <h4>
 <a name="efficiency" class="anchor" href="#efficiency"><span class="octicon octicon-link"></span></a>Efficiency</h4>
