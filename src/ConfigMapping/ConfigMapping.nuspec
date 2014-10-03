@@ -3,17 +3,16 @@
   <metadata>
     <id>ConfigMapper</id>
     <title>ConfigMapper</title>
-    <version>0.0.4</version>
+    <version>0.0.5</version>
     <authors>Martin Burrows</authors>
     <owners>Martin Burrows</owners>
     <summary>Provides interfaced configuration objects with properties mapped from appSettings, allowing your IConfiguration to be injected anywhere in your code in a unit-testable manner.</summary>
     <description>Provides interfaced configuration objects with properties mapped from appSettings. This allows your IConfiguration to be injected anywhere in your code providing a unit-testable solution to configuration management.</description>
     <projectUrl>https://github.com/martinjrb/ConfigMapper</projectUrl>
-    <tags>configuration config map mapper mapping setting settings</tags>
+    <tags>configuration config map mapper mapping setting settings configmapping</tags>
     <licenseUrl>https://raw.githubusercontent.com/martinjrb/ConfigMapper/master/LICENSE</licenseUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
-    <releaseNotes>
-    </releaseNotes>
+    <releaseNotes>Calling ToString() on a mapped class now calls ToString() on the property of interfaces with only one property.</releaseNotes>
     <copyright>Martin Burrows 2014</copyright>
     <dependencies>
     </dependencies>

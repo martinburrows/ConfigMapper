@@ -2,7 +2,6 @@
 using System.Configuration;
 using System.Linq;
 using System.Reflection;
-using ConfigMapping.Test.Unit.ConfigMapper;
 using NUnit.Framework;
 
 namespace ConfigMapping.Test.Unit.ConfigMapperTests

@@ -1,4 +1,4 @@
-﻿namespace ConfigMapping.Test.Unit.ConfigMapper
+﻿namespace ConfigMapping.Test.Unit.ConfigMapperTests
 {
     public enum TestEnum
     {

@@ -44,5 +44,13 @@ namespace ConfigMapping
                 throw new ConfigMappingException(e.Message, configKey);
             }
         }
+
+        public override string ToString()
+        {
+            var type = this.GetType();
+            var properties = type.GetProperties(BindingFlags.Public | BindingFlags.Instance);
+
+            return properties.Count() == 1 ? properties.Single().GetValue(this, null).ToString() : base.ToString();
+        }
     }
 }
