@@ -41,8 +41,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ConfigBase.cs" />
     <Compile Include="Configuration.cs" />
     <Compile Include="ConfigMapper.cs" />
+    <Compile Include="ConnectionStrings.cs" />
     <Compile Include="Exceptions\ConfigMappingException.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

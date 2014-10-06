@@ -9,10 +9,12 @@ namespace ConfigMapping
     public static class ConfigMapper
     {
         private static readonly ConcurrentDictionary<Type, object> ExistingConfiguration;
+        private static readonly ConcurrentDictionary<Type, object> ExistingConnectionStrings;
 
         static ConfigMapper()
         {
             ExistingConfiguration = new ConcurrentDictionary<Type, object>();
+            ExistingConnectionStrings = new ConcurrentDictionary<Type, object>();
         }
  
         /// <summary>
@@ -20,19 +22,29 @@ namespace ConfigMapping
         /// </summary>
         public static T Map<T>()
         {
-            var type = typeof (T);
+            return Lookup<T, Configuration>(ExistingConfiguration);
+        }
 
-            return (T)ExistingConfiguration.GetOrAdd(type, t =>
+        /// <summary>
+        /// Returns an implementation of the given interface with properties populated from the connectionStrings config section.
+        /// </summary>
+        public static T MapConnectionStrings<T>()
+        {
+            return Lookup<T, ConnectionStrings>(ExistingConnectionStrings);
+        }
+
+        private static TI Lookup<TI, TP>(ConcurrentDictionary<Type, object> collection)
+        {
+            var type = typeof(TI);
+
+            return (TI)collection.GetOrAdd(type, t =>
             {
-                if (ExistingConfiguration.ContainsKey(type))
-                    return (T) ExistingConfiguration[type];
-
-                var typeBuilder = GetTypeBuilder<T>();
+                var typeBuilder = GetTypeBuilder<TI, TP>();
 
                 GenerateConstructor(typeBuilder);
 
-                foreach (var property in typeof (T).GetProperties())
-                    GenerateProperty<T>(typeBuilder, property);
+                foreach (var property in typeof(TI).GetProperties())
+                    GenerateProperty<TI>(typeBuilder, property);
 
                 return Activator.CreateInstance(typeBuilder.CreateType());
             });
@@ -80,7 +92,7 @@ namespace ConfigMapping
                 CallingConventions.Standard,
                 Type.EmptyTypes);
 
-            var initialiseMethod = typeof(Configuration).GetMethod("___InitialiseFieldValues", BindingFlags.NonPublic | BindingFlags.FlattenHierarchy | BindingFlags.Instance);
+            var initialiseMethod = typeBuilder.BaseType.GetMethod("___InitialiseFieldValues", BindingFlags.NonPublic | BindingFlags.FlattenHierarchy | BindingFlags.Instance);
 
             var constructorIL = constructorBuilder.GetILGenerator();
             constructorIL.Emit(OpCodes.Ldarg_0);
@@ -147,7 +159,7 @@ namespace ConfigMapping
             propertyBuilder.SetSetMethod(setAccessorMethodBuiler);
         }
 
-        private static TypeBuilder GetTypeBuilder<T>()
+        private static TypeBuilder GetTypeBuilder<TI,TP>()
         {
             var assemblyName = new AssemblyName("DynamicConfigMapping");
             var assemblyBuilder = AppDomain.CurrentDomain.DefineDynamicAssembly(assemblyName, AssemblyBuilderAccess.Run);
@@ -156,8 +168,8 @@ namespace ConfigMapping
             return moduleBuilder.DefineType(
                 name: "ConfigMapping", 
                 attr: TypeAttributes.Public | TypeAttributes.Sealed, 
-                parent: typeof(Configuration), 
-                interfaces: new[] { typeof(T) });
+                parent: typeof(TP), 
+                interfaces: new[] { typeof(TI) });
         }
     }
 }

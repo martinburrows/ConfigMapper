@@ -45,7 +45,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ConfigMapperTests\AppSettingsTests.cs" />
+    <Compile Include="ConfigMapperTests\ConnectionStringsTests.cs" />
     <Compile Include="ConfigMapperTests\IAppSettingsConfiguration.cs" />
+    <Compile Include="ConfigMapperTests\IConnectionStrings.cs" />
     <Compile Include="ConfigMapperTests\ISingleAppSetting.cs" />
     <Compile Include="ConfigMapperTests\TestEnum.cs" />
     <Compile Include="ConfigMapperTests\ToStringTests.cs" />

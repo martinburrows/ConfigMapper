@@ -6,26 +6,20 @@ using ConfigMapping.Exceptions;
 
 namespace ConfigMapping
 {
-    // using non-standard method names to avoid clashes with app settings of the same names
-    public abstract class Configuration
+    public abstract class Configuration : ConfigBase
     {
-        protected internal void ___InitialiseFieldValues()
+        protected internal override void MapProperty(PropertyInfo property, Type type)
         {
-            var type = this.GetType();
+            var field = type.GetField("_" + property.Name, BindingFlags.Instance | BindingFlags.NonPublic);
 
-            foreach (var property in type.GetProperties(BindingFlags.Instance | BindingFlags.Public))
+            var configKey = ConfigurationManager.AppSettings.AllKeys.SingleOrDefault(c => c.Equals(property.Name, StringComparison.OrdinalIgnoreCase));
+
+            if (configKey == null)
             {
-                var field = type.GetField("_" + property.Name, BindingFlags.Instance | BindingFlags.NonPublic);
-
-                var configKey = ConfigurationManager.AppSettings.AllKeys.SingleOrDefault(c => c.Equals(property.Name, StringComparison.OrdinalIgnoreCase));
-
-                if (configKey == null)
-                {
-                    throw new ConfigMappingException("No matching key in appSettings could be found", property.Name);
-                }
-                
-                ___SetFieldValue(field, configKey);
+                throw new ConfigMappingException("No matching key in appSettings could be found", property.Name);
             }
+                
+            ___SetFieldValue(field, configKey);
         }
 
         private void ___SetFieldValue(FieldInfo field, string configKey)
@@ -43,14 +37,6 @@ namespace ConfigMapping
             {
                 throw new ConfigMappingException(e.Message, configKey);
             }
-        }
-
-        public override string ToString()
-        {
-            var type = this.GetType();
-            var properties = type.GetProperties(BindingFlags.Public | BindingFlags.Instance);
-
-            return properties.Count() == 1 ? properties.Single().GetValue(this, null).ToString() : base.ToString();
         }
     }
 }
