@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Concurrent;
 using System.Configuration;
+using ConfigMapping.Configuration;
 
 namespace ConfigMapping
 {
@@ -20,7 +21,7 @@ namespace ConfigMapping
         /// </summary>
         public static T Map<T>()
         {
-            return Lookup<T, Configuration>(ExistingConfiguration);
+            return Lookup<T, AppSettings>(ExistingConfiguration);
         }
 
         /// <summary>
@@ -31,7 +32,7 @@ namespace ConfigMapping
             return Lookup<T, ConnectionStrings>(ExistingConnectionStrings);
         }
 
-        private static TI Lookup<TI, TP>(ConcurrentDictionary<Type, object> collection)
+        private static TI Lookup<TI, TP>(ConcurrentDictionary<Type, object> collection) where TP : ConfigBase
         {
             return (TI)collection.GetOrAdd(typeof(TI), t => new TypeGenerator<TI,TP>().Generate());
         }
@@ -44,7 +45,7 @@ namespace ConfigMapping
             RefreshConfigurationManager();
 
             foreach (var configuration in ExistingConfiguration)
-                ((Configuration)configuration.Value).___InitialiseFieldValues();
+                ((AppSettings)configuration.Value).___InitialiseFieldValues();
         }
 
         /// <summary>
@@ -62,7 +63,7 @@ namespace ConfigMapping
             if (!ExistingConfiguration.ContainsKey(type)) return Map<T>();
 
             var configuration = ExistingConfiguration[type];
-            ((Configuration)configuration).___InitialiseFieldValues();
+            ((AppSettings)configuration).___InitialiseFieldValues();
             return (T)configuration;
         }
 

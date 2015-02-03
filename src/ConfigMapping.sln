@@ -5,7 +5,7 @@ VisualStudioVersion = 12.0.30501.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConfigMapping", "ConfigMapping\ConfigMapping.csproj", "{F64C3B2F-48E2-461E-836B-31E1D694255C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConfigMapping.Test.Unit", "ConfigMapping.Test.Unit\ConfigMapping.Test.Unit.csproj", "{E8FE7069-FFED-4597-8766-70E59842C3EA}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConfigMapping.Tests", "ConfigMapping.Tests\ConfigMapping.Tests.csproj", "{E8FE7069-FFED-4597-8766-70E59842C3EA}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

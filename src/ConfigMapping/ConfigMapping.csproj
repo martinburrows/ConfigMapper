@@ -41,13 +41,16 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ConfigBase.cs" />
-    <Compile Include="Configuration.cs" />
+    <Compile Include="Configuration\ConfigBase.cs" />
+    <Compile Include="Configuration\AppSettings.cs" />
     <Compile Include="ConfigMapper.cs" />
-    <Compile Include="ConnectionStrings.cs" />
+    <Compile Include="Configuration\ConnectionStrings.cs" />
     <Compile Include="Exceptions\ConfigMappingException.cs" />
+    <Compile Include="MapFromAttribute.cs" />
+    <Compile Include="OptionalAttribute.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="TypeGenerator.cs" />
+    <Compile Include="Configuration\PropertyInfoExtensions.cs" />
+    <Compile Include="Configuration\TypeGenerator.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

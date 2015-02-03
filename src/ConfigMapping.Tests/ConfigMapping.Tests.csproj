@@ -7,8 +7,8 @@
     <ProjectGuid>{E8FE7069-FFED-4597-8766-70E59842C3EA}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>ConfigMapping.Test.Unit</RootNamespace>
-    <AssemblyName>ConfigMapping.Test.Unit</AssemblyName>
+    <RootNamespace>ConfigMapping.Tests</RootNamespace>
+    <AssemblyName>ConfigMapping.Tests</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
@@ -44,13 +44,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ConfigMapperTests\AppSettingsTests.cs" />
-    <Compile Include="ConfigMapperTests\ConnectionStringsTests.cs" />
-    <Compile Include="ConfigMapperTests\IAppSettingsConfiguration.cs" />
-    <Compile Include="ConfigMapperTests\IConnectionStrings.cs" />
-    <Compile Include="ConfigMapperTests\ISingleAppSetting.cs" />
-    <Compile Include="ConfigMapperTests\TestEnum.cs" />
-    <Compile Include="ConfigMapperTests\ToStringTests.cs" />
+    <Compile Include="ConfigMapper\IAppSettingsEnumConfiguration.cs" />
+    <Compile Include="ConfigMapper\MapTests.cs" />
+    <Compile Include="ConfigMapper\MapConnectionStringsTests.cs" />
+    <Compile Include="ConfigMapper\IAppSettingsConfiguration.cs" />
+    <Compile Include="ConfigMapper\IConnectionStrings.cs" />
+    <Compile Include="ConfigMapper\ISingleAppSetting.cs" />
+    <Compile Include="ConfigMapper\TestEnum.cs" />
+    <Compile Include="Configuration\ConfigBase\ToStringTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
