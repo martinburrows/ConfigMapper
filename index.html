@@ -32,7 +32,7 @@
     <div id="main_content_wrap" class="outer">
       <section id="main_content" class="inner">
         <h3>
-<a name="install-from-nuget" class="anchor" href="#install-from-nuget"><span class="octicon octicon-link"></span></a>Install from <a href="https://www.nuget.org/packages/ConfigMapper">NuGet</a>
+<a id="install-from-nuget" class="anchor" href="#install-from-nuget" aria-hidden="true"><span class="octicon octicon-link"></span></a>Install from <a href="https://www.nuget.org/packages/ConfigMapper">NuGet</a>
 </h3>
 
 <pre><code>PM&gt; Install-Package ConfigMapper
@@ -41,12 +41,12 @@
 <p>ConfigMapper for .NET provides interfaced configuration objects with properties mapped from <code>appSettings</code> or <code>connectionStrings</code>, allowing your <code>IConfiguration</code> to be injected anywhere in your code in a unit-testable manner with no <a href="http://www.wekeroad.com/2011/03/10/are-friends-immutable/">magic strings</a> in sight.</p>
 
 <h4>
-<a name="usage-is-simple" class="anchor" href="#usage-is-simple"><span class="octicon octicon-link"></span></a>Usage is simple.</h4>
+<a id="usage-is-simple" class="anchor" href="#usage-is-simple" aria-hidden="true"><span class="octicon octicon-link"></span></a>Usage is simple.</h4>
 
 <pre><code>using ConfigMapping;
 </code></pre>
 
-<pre><code>public interface IConfiguration
+<pre><code>public interface IAppSettings
 {
     string KeyInAppSettings { get; }
     decimal WorksWithManyTypes { get; }
@@ -54,10 +54,10 @@
 }
 </code></pre>
 
-<pre><code>IConfiguration configuration = ConfigMapper.Map&lt;IConfiguration&gt;();
+<pre><code>IAppSettings configuration = ConfigMapper.Map&lt;IAppSettings&gt;();
 </code></pre>
 
-<p>Configure your DI to inject <code>IConfiguration</code> using the Map method into any class. The code above assumes we defined <code>MyEnum</code> somewhere and we have our config file as:</p>
+<p>Configure your DI to inject <code>IAppSettings</code> using the Map method into any class. The code above assumes we defined <code>MyEnum</code> somewhere and we have our config file as:</p>
 
 <pre><code>&lt;appSettings&gt;
   &lt;add key="KeyInAppSettings" value="Foo"/&gt;
@@ -69,21 +69,21 @@
 <p>Any Type the <code>System.Convert</code> class can handle is accepted, in addition to enums.</p>
 
 <h4>
-<a name="prefer-to-use-without-injection-thats-fine-too" class="anchor" href="#prefer-to-use-without-injection-thats-fine-too"><span class="octicon octicon-link"></span></a>Prefer to use without injection? That's fine too.</h4>
+<a id="prefer-to-use-without-injection-thats-fine-too" class="anchor" href="#prefer-to-use-without-injection-thats-fine-too" aria-hidden="true"><span class="octicon octicon-link"></span></a>Prefer to use without injection? That's fine too.</h4>
 
 <p>Place this class in your project root for ease of access and call it from anywhere:</p>
 
 <pre><code>public static class Configuration
 {
-  public static IConfiguration Current = ConfigMapper.Map&lt;IConfiguration&gt;();
+  public static IAppSettings AppSettings = ConfigMapper.Map&lt;IAppSettings&gt;();
 }
 </code></pre>
 
-<pre><code>var myConfigValue = Configuration.Current.MyConfigKey;
+<pre><code>var myConfigValue = Configuration.AppSettings.MyConfigKey;
 </code></pre>
 
 <h4>
-<a name="connection-strings-are-also-handled" class="anchor" href="#connection-strings-are-also-handled"><span class="octicon octicon-link"></span></a>Connection strings are also handled</h4>
+<a id="connection-strings-are-also-handled" class="anchor" href="#connection-strings-are-also-handled" aria-hidden="true"><span class="octicon octicon-link"></span></a>Connection strings are also handled</h4>
 
 <pre><code>public interface IConnectionStrings
 {
@@ -98,17 +98,39 @@
 <p>Simply match your property names to your connection string names. Use <code>string</code> property types for simple mappings or <code>ConnectionStringSettings</code> property types to access the <code>ProviderName</code> and other properties.</p>
 
 <h4>
-<a name="efficiency" class="anchor" href="#efficiency"><span class="octicon octicon-link"></span></a>Efficiency</h4>
+<a id="map-from-custom-keys" class="anchor" href="#map-from-custom-keys" aria-hidden="true"><span class="octicon octicon-link"></span></a>Map from custom keys</h4>
+
+<p>ConfigMapper will look for a key name matching each property name. To override this, use the <code>MapFrom</code> attribute</p>
+
+<pre><code>    [MapFrom("ActualKey")]
+    string AnythingYouLike { get; }
+</code></pre>
+
+<h4>
+<a id="mark-optional-properties" class="anchor" href="#mark-optional-properties" aria-hidden="true"><span class="octicon octicon-link"></span></a>Mark optional properties</h4>
+
+<p>To be explicit ConfigMapper throws exceptions if it comes across missing keys in your config. You can mark properties as optional if this is actually intentional. To use anything other than the default value for each type you can specify this too, it will be converted from a string to your type like other configuration values.</p>
+
+<pre><code>    [Optional]
+    string ThisWillBeNull { get; }
+
+    [Optional("true")]
+    bool ThisDefaultsToTrue { get; }
+
+</code></pre>
+
+<h4>
+<a id="efficiency" class="anchor" href="#efficiency" aria-hidden="true"><span class="octicon octicon-link"></span></a>Efficiency</h4>
 
 <p>ConfigMapper is thread-safe, and only one concrete instance from an interface is ever generated, meaning you can call the <code>Map&lt;T&gt;</code> method any number of times in your code without increased memory usage.</p>
 
 <h4>
-<a name="config-change-handling" class="anchor" href="#config-change-handling"><span class="octicon octicon-link"></span></a>Config Change Handling</h4>
+<a id="config-change-handling" class="anchor" href="#config-change-handling" aria-hidden="true"><span class="octicon octicon-link"></span></a>Config Change Handling</h4>
 
 <p>Call <code>ConfigMapper.RefreshConfiguration</code> if your configuration has changed. Any previously mapped objects will be updated with the latest values from your configuration without needing to re-map them.</p>
 
 <h4>
-<a name="licence" class="anchor" href="#licence"><span class="octicon octicon-link"></span></a>Licence</h4>
+<a id="licence" class="anchor" href="#licence" aria-hidden="true"><span class="octicon octicon-link"></span></a>Licence</h4>
 
 <p>Provided under the <a href="https://raw.githubusercontent.com/martinjrb/ConfigMapper/master/LICENSE">MIT Licence</a></p>
       </section>
