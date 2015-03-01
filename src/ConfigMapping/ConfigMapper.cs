@@ -51,7 +51,7 @@ namespace ConfigMapping
         /// <summary>
         /// Repopulates configuration objects of only the type provided with fresh values from the appSettings config section.
         /// <returns>
-        /// The refreshed configuration of the given type
+        /// Returns the refreshed configuration of the given type.
         /// </returns>
         /// </summary>
         public static T RefreshConfiguration<T>()
