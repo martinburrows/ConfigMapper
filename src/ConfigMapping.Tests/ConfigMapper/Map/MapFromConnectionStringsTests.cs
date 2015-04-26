@@ -1,16 +1,18 @@
 ﻿using System.Reflection;
+using ConfigMapping.Tests.ConfigMapper.Map.Interfaces;
 using NUnit.Framework;
 
-namespace ConfigMapping.Tests.ConfigMapper
+namespace ConfigMapping.Tests.ConfigMapper.Map
 {
     [TestFixture]
-    public class MapConnectionStringsTests
+    public class MapFromConnectionStringsTests
     {
         private IConnectionStrings _config;
 
         [SetUp]
         public void Setup()
         {
+            ConfigMapping.ConfigMapper.RefreshConfiguration();
             _config = ConfigMapping.ConfigMapper.MapConnectionStrings<IConnectionStrings>();
         }
 

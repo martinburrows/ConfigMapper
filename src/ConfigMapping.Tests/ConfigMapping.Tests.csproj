@@ -44,13 +44,15 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ConfigMapper\IAppSettingsEnumConfiguration.cs" />
-    <Compile Include="ConfigMapper\MapTests.cs" />
-    <Compile Include="ConfigMapper\MapConnectionStringsTests.cs" />
-    <Compile Include="ConfigMapper\IAppSettingsConfiguration.cs" />
-    <Compile Include="ConfigMapper\IConnectionStrings.cs" />
-    <Compile Include="ConfigMapper\ISingleAppSetting.cs" />
-    <Compile Include="ConfigMapper\TestEnum.cs" />
+    <Compile Include="ConfigMapper\Map\Interfaces\IAppSettingsEnumConfiguration.cs" />
+    <Compile Include="ConfigMapper\Map\Interfaces\IEnvironmentVariables.cs" />
+    <Compile Include="ConfigMapper\Map\MapFromAppSettingsTests.cs" />
+    <Compile Include="ConfigMapper\Map\MapFromConnectionStringsTests.cs" />
+    <Compile Include="ConfigMapper\Map\Interfaces\IAppSettingsConfiguration.cs" />
+    <Compile Include="ConfigMapper\Map\Interfaces\IConnectionStrings.cs" />
+    <Compile Include="ConfigMapper\Map\Interfaces\ISingleAppSetting.cs" />
+    <Compile Include="ConfigMapper\Map\MapFromEnvironmentVariablesTests.cs" />
+    <Compile Include="ConfigMapper\Map\TestEnum.cs" />
     <Compile Include="Configuration\ConfigBase\ToStringTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

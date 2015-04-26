@@ -2,22 +2,24 @@
 using System.Configuration;
 using System.Linq;
 using System.Reflection;
+using ConfigMapping.Tests.ConfigMapper.Map.Interfaces;
 using NUnit.Framework;
 
-namespace ConfigMapping.Tests.ConfigMapper
+namespace ConfigMapping.Tests.ConfigMapper.Map
 {
-    public class MapTests
+    public class MapFromAppSettingsTests
     {
-        protected IAppSettingsConfiguration AppSettingsConfiguration;  
+        protected IAppSettingsConfiguration AppSettingsConfiguration;
 
         [SetUp]
         protected void SetUp()
         {
-            AppSettingsConfiguration = ConfigMapping.ConfigMapper.RefreshConfiguration<IAppSettingsConfiguration>();
+            ConfigMapping.ConfigMapper.RefreshConfiguration();
+            AppSettingsConfiguration = ConfigMapping.ConfigMapper.Map<IAppSettingsConfiguration>();
         }
         
         [TestFixture]
-        public class MapTypeConversionTests : MapTests
+        public class MapTypeConversionTests : MapFromAppSettingsTests
         {
             [TestCase(typeof (string), "TestString")]
             [TestCase(typeof (int), "TestInt")]
@@ -58,7 +60,7 @@ namespace ConfigMapping.Tests.ConfigMapper
         }
 
         [TestFixture]
-        public class MapDuplicateObjectGenerationTests : MapTests
+        public class MapDuplicateObjectGenerationTests : MapFromAppSettingsTests
         {
             [Test]
             public void When_mapping_multiple_times_then_only_one_concrete_implementaion_of_an_interface_is_ever_created()
@@ -95,61 +97,6 @@ namespace ConfigMapping.Tests.ConfigMapper
                 Assert.AreEqual(originalString, firstCall.TestString);
                 Assert.AreEqual(originalString, secondCall.TestString);
                 Assert.AreEqual(firstCall.TestString, thirdCall.TestString);
-            }
-        }
-        
-        [TestFixture]
-        public class MapFromAttributeTests : MapTests
-        {
-            [Test]
-            public void When_mapping_from_custom_keys_then_properties_are_mapped_correctly()
-            {
-                Assert.AreEqual(AppSettingsConfiguration.TestString,
-                    AppSettingsConfiguration.TestStringUsingMapFromAttribute);
-            }
-
-            [Test]
-            public void When_mapping_from_custom_keys_which_are_optional_then_properties_are_mapped_correctly()
-            {
-                Assert.AreEqual(AppSettingsConfiguration.TestString,
-                    AppSettingsConfiguration.TestStringWithMapFromAttributeAndOptionalValueWithDefault);
-            }
-        }
-
-        [TestFixture]
-        public class OptionalAttributeTests : MapTests
-        {
-            private const string Default = "default";
-            [Test]
-            public void When_mapping_from_optional_keys_then_properties_are_mapped_correctly()
-            {
-                Assert.AreEqual(AppSettingsConfiguration.TestString,
-                    AppSettingsConfiguration.TestStringUsingMapFromAttribute);
-            }
-
-            [Test]
-            public void When_mapping_from_custom_keys_which_are_optional_then_properties_are_mapped_correctly()
-            {
-                Assert.AreEqual(AppSettingsConfiguration.TestString,
-                    AppSettingsConfiguration.TestStringWithMapFromAttributeAndOptionalValueWithDefault);
-            }
-
-            [Test]
-            public void When_mapping_from_non_existent_keys_which_are_optional_then_properties_are_mapped_correctly()
-            {
-                Assert.AreEqual(Default,
-                    AppSettingsConfiguration.NonExistentOptionalWithDefaultValue);
-
-                Assert.IsNull(AppSettingsConfiguration.NonExistentOptionalWithNoDefaultValue);
-            }
-
-            [Test]
-            public void When_mapping_from_non_existent_custom_keys_which_are_optional_then_properties_are_mapped_correctly()
-            {
-                Assert.AreEqual(AppSettingsConfiguration.TestString,
-                    AppSettingsConfiguration.TestStringWithMapFromAttributeAndOptionalValueWithDefault);
-
-                Assert.IsNull(AppSettingsConfiguration.NonExistentOptionalValueWithMapFromAttributeAndNoDefault);
             }
         }
     }

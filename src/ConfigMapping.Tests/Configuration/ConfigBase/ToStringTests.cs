@@ -1,4 +1,5 @@
 using ConfigMapping.Tests.ConfigMapper;
+using ConfigMapping.Tests.ConfigMapper.Map.Interfaces;
 using NUnit.Framework;
 
 namespace ConfigMapping.Tests.Configuration.ConfigBase
@@ -11,8 +12,9 @@ namespace ConfigMapping.Tests.Configuration.ConfigBase
         [SetUp]
         protected void SetUp()
         {
-            AppSettingsConfiguration = ConfigMapping.ConfigMapper.RefreshConfiguration<IAppSettingsConfiguration>();
-            SingleAppSetting = ConfigMapping.ConfigMapper.RefreshConfiguration<ISingleAppSetting>();
+            ConfigMapping.ConfigMapper.RefreshConfiguration();
+            AppSettingsConfiguration = ConfigMapping.ConfigMapper.Map<IAppSettingsConfiguration>();
+            SingleAppSetting = ConfigMapping.ConfigMapper.Map<ISingleAppSetting>();
         }
 
         [TestFixture]

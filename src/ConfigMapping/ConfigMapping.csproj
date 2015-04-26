@@ -29,6 +29,7 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <DocumentationFile>bin\Release\ConfigMapping.xml</DocumentationFile>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -45,7 +46,9 @@
     <Compile Include="Configuration\AppSettings.cs" />
     <Compile Include="ConfigMapper.cs" />
     <Compile Include="Configuration\ConnectionStrings.cs" />
+    <Compile Include="Configuration\EnvironmentVariables.cs" />
     <Compile Include="Exceptions\ConfigMappingException.cs" />
+    <Compile Include="MapFrom.cs" />
     <Compile Include="MapFromAttribute.cs" />
     <Compile Include="OptionalAttribute.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

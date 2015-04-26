@@ -7,69 +7,56 @@ namespace ConfigMapping
 {
     public static class ConfigMapper
     {
-        private static readonly ConcurrentDictionary<Type, object> ExistingConfiguration;
-        private static readonly ConcurrentDictionary<Type, object> ExistingConnectionStrings;
+        private static readonly ConcurrentDictionary<Tuple<Type,Type>, object> ExistingConfig;
 
         static ConfigMapper()
         {
-            ExistingConfiguration = new ConcurrentDictionary<Type, object>();
-            ExistingConnectionStrings = new ConcurrentDictionary<Type, object>();
-        }
- 
-        /// <summary>
-        /// Returns an implementation of the given interface with properties populated from the appSettings config section.
-        /// </summary>
-        public static T Map<T>()
-        {
-            return Lookup<T, AppSettings>(ExistingConfiguration);
+            ExistingConfig = new ConcurrentDictionary<Tuple<Type, Type>, object>();
         }
 
         /// <summary>
-        /// Returns an implementation of the given interface with properties populated from the connectionStrings config section.
+        /// Returns an implementation of the given interface with properties populated from the specified source or config section.
         /// </summary>
+        /// <param name="mapfrom">The config mapping source</param>
+        public static T Map<T>(MapFrom mapfrom = MapFrom.AppSettings)
+        {
+            switch (mapfrom)
+            {
+                case MapFrom.AppSettings:
+                    return Lookup<T, AppSettings>();
+
+                case MapFrom.ConnectionStrings:
+                    return Lookup<T, ConnectionStrings>();
+
+                case MapFrom.EnvironmentVariables:
+                    return Lookup<T, EnvironmentVariables>();
+
+                default:
+                    throw new ArgumentOutOfRangeException("mapfrom");
+            }
+        }
+
+        [Obsolete("Map<>(MapFrom.ConnectionStrings) can be used instead", false)]
         public static T MapConnectionStrings<T>()
         {
-            return Lookup<T, ConnectionStrings>(ExistingConnectionStrings);
+            return Map<T>(MapFrom.ConnectionStrings);
         }
-
-        private static TI Lookup<TI, TP>(ConcurrentDictionary<Type, object> collection) where TP : ConfigBase
+        
+        private static TI Lookup<TI, TP>() where TP : ConfigBase
         {
-            return (TI)collection.GetOrAdd(typeof(TI), t => new TypeGenerator<TI,TP>().Generate());
+            return (TI)ExistingConfig.GetOrAdd(new Tuple<Type,Type>(typeof(TI),typeof(TP)), t => new TypeGenerator<TI, TP>().Generate());
         }
 
         /// <summary>
-        /// Repopulates all configuration objects with fresh values from the appSettings config section.
+        /// Repopulates all configuration objects with fresh values from the configuration file. Does not refresh environment variables. 
         /// </summary>
         public static void RefreshConfiguration()
         {
-            RefreshConfigurationManager();
-
-            foreach (var configuration in ExistingConfiguration)
-                ((AppSettings)configuration.Value).___InitialiseFieldValues();
-        }
-
-        /// <summary>
-        /// Repopulates configuration objects of only the type provided with fresh values from the appSettings config section.
-        /// <returns>
-        /// Returns the refreshed configuration of the given type.
-        /// </returns>
-        /// </summary>
-        public static T RefreshConfiguration<T>()
-        {
-            RefreshConfigurationManager();
-
-            var type = typeof (T);
-
-            if (!ExistingConfiguration.ContainsKey(type)) return Map<T>();
-
-            var configuration = ExistingConfiguration[type];
-            ((AppSettings)configuration).___InitialiseFieldValues();
-            return (T)configuration;
-        }
-
-        private static void RefreshConfigurationManager()
-        {
             ConfigurationManager.RefreshSection("appSettings");
+            ConfigurationManager.RefreshSection("connectionStrings");
+
+            foreach (var configuration in ExistingConfig)
+                ((ConfigBase)configuration.Value).___InitialiseFieldValues();
         }
     }
 }

@@ -1,4 +1,4 @@
-﻿namespace ConfigMapping.Tests.ConfigMapper
+﻿namespace ConfigMapping.Tests.ConfigMapper.Map.Interfaces
 {
     public interface ISingleAppSetting
     {

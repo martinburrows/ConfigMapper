@@ -1,6 +1,6 @@
 ﻿using System.Configuration;
 
-namespace ConfigMapping.Tests.ConfigMapper
+namespace ConfigMapping.Tests.ConfigMapper.Map.Interfaces
 {
     public interface IConnectionStrings
     {
