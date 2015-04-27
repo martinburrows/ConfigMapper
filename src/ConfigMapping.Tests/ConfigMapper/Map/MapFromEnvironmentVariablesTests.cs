@@ -43,6 +43,7 @@ namespace ConfigMapping.Tests.ConfigMapper.Map
         [Test]
         public void When_mapping_invalid_environment_variables_then_exception_is_thrown()
         {
+            Assert.Throws<TargetInvocationException>(() => ConfigMapping.ConfigMapper.Map<IInvalidTypeEnvironmentVariables>(MapFrom.EnvironmentVariables));
             Assert.Throws<TargetInvocationException>(() => ConfigMapping.ConfigMapper.Map<IInvalidEnvironmentVariables>(MapFrom.EnvironmentVariables));
         }
     }

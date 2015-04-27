@@ -46,6 +46,13 @@
   <ItemGroup>
     <Compile Include="ConfigMapper\Map\Interfaces\IAppSettingsEnumConfiguration.cs" />
     <Compile Include="ConfigMapper\Map\Interfaces\IEnvironmentVariables.cs" />
+    <Compile Include="ConfigMapper\Map\Interfaces\IInvalidEnvironmentVariables.cs" />
+    <Compile Include="ConfigMapper\Map\Interfaces\IInvalidNameConnectionStrings.cs" />
+    <Compile Include="ConfigMapper\Map\Interfaces\IInvalidTypeAppSettingsConfiguration.cs" />
+    <Compile Include="ConfigMapper\Map\Interfaces\IInvalidTypeConnectionStrings.cs" />
+    <Compile Include="ConfigMapper\Map\Interfaces\IInvalidTypeEnvironmentVariables.cs" />
+    <Compile Include="ConfigMapper\Map\Interfaces\INonExistentAppSettingsConfiguration.cs" />
+    <Compile Include="ConfigMapper\Map\Interfaces\IOptionalEnvironmentVariables.cs" />
     <Compile Include="ConfigMapper\Map\MapFromAppSettingsTests.cs" />
     <Compile Include="ConfigMapper\Map\MapFromConnectionStringsTests.cs" />
     <Compile Include="ConfigMapper\Map\Interfaces\IAppSettingsConfiguration.cs" />

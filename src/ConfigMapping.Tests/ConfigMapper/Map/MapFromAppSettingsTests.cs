@@ -2,6 +2,7 @@
 using System.Configuration;
 using System.Linq;
 using System.Reflection;
+using ConfigMapping.Exceptions;
 using ConfigMapping.Tests.ConfigMapper.Map.Interfaces;
 using NUnit.Framework;
 
@@ -97,6 +98,35 @@ namespace ConfigMapping.Tests.ConfigMapper.Map
                 Assert.AreEqual(originalString, firstCall.TestString);
                 Assert.AreEqual(originalString, secondCall.TestString);
                 Assert.AreEqual(firstCall.TestString, thirdCall.TestString);
+            }
+        }
+
+        [TestFixture]
+        public class MapInvalidInterfacesTests : MapFromAppSettingsTests
+        {
+            [Test]
+            public void When_exceptions_are_thrown_they_contain_the_property_name_of_the_attempted_mapping()
+            {
+                try
+                {
+                    ConfigMapping.ConfigMapper.Map<INonExistentAppSettingsConfiguration>();
+                }
+                catch (Exception e)
+                {
+                    Assert.IsTrue(e.InnerException.Message.Contains("NonExistent"));
+                }
+            }
+            
+            [Test]
+            public void When_mapping_missing_keys_exceptions_should_be_thrown()
+            {
+                Assert.Throws<TargetInvocationException>(() => ConfigMapping.ConfigMapper.Map<INonExistentAppSettingsConfiguration>());
+            }
+
+            [Test]
+            public void When_mapping_invalid_types_exceptions_should_be_thrown()
+            {
+                Assert.Throws<TargetInvocationException>(() => ConfigMapping.ConfigMapper.Map<IInvalidTypeAppSettingsConfiguration>());
             }
         }
     }
