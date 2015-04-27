@@ -92,10 +92,18 @@
 }
 </code></pre>
 
-<pre><code>var connStrings = ConfigMapper.MapConnectionStrings&lt;IConnectionStrings&gt;();
+<pre><code>var cs = ConfigMapper.Map&lt;IConnectionStrings&gt;(MapFrom.ConnectionStrings);
 </code></pre>
 
 <p>Simply match your property names to your connection string names. Use <code>string</code> property types for simple mappings or <code>ConnectionStringSettings</code> property types to access the <code>ProviderName</code> and other properties.</p>
+
+<h4>
+<a id="map-from-environment-variables" class="anchor" href="#map-from-environment-variables" aria-hidden="true"><span class="octicon octicon-link"></span></a>Map from environment variables</h4>
+
+<p>Environment variables are mapped at the process level - any user or system environment variables will also be accessible. Include only the variables you need to map in your interface, the rest are ignored.</p>
+
+<pre><code>ConfigMapper.Map&lt;IMyEnvironmentVariables&gt;(MapFrom.EnvironmentVariables);
+</code></pre>
 
 <h4>
 <a id="map-from-custom-keys" class="anchor" href="#map-from-custom-keys" aria-hidden="true"><span class="octicon octicon-link"></span></a>Map from custom keys</h4>
@@ -127,7 +135,7 @@
 <h4>
 <a id="config-change-handling" class="anchor" href="#config-change-handling" aria-hidden="true"><span class="octicon octicon-link"></span></a>Config Change Handling</h4>
 
-<p>Call <code>ConfigMapper.RefreshConfiguration</code> if your configuration has changed. Any previously mapped objects will be updated with the latest values from your configuration without needing to re-map them.</p>
+<p>Call <code>ConfigMapper.RefreshConfiguration</code> if your configuration has changed. Any previously mapped objects will be updated with the latest values from your configuration without needing to re-map them. This works with <code>appSettings</code> and <code>connectionStrings</code> but not with environment variables.</p>
 
 <h4>
 <a id="licence" class="anchor" href="#licence" aria-hidden="true"><span class="octicon octicon-link"></span></a>Licence</h4>
@@ -140,7 +148,7 @@
     <div id="footer_wrap" class="outer">
       <footer class="inner">
         <p class="copyright">ConfigMapper maintained by <a href="https://github.com/martinburrows">martinburrows</a></p>
-        <p>Published with <a href="http://pages.github.com">GitHub Pages</a></p>
+        <p>Published with <a href="https://pages.github.com">GitHub Pages</a></p>
       </footer>
     </div>
 
