@@ -1,7 +1,7 @@
 ConfigMapper
 =================
 
-ConfigMapper for .NET provides interfaced configuration objects with properties mapped from ```appSettings```, allowing your ```IConfiguration``` to be injected anywhere in your code in a unit-testable manner.
+ConfigMapper for .NET provides interfaced configuration objects with properties mapped from ```appSettings``` or ```connectionStrings```, allowing your ```IConfiguration``` to be injected anywhere in your code in a unit-testable manner.
 
 Installation - NuGet
 -----
@@ -34,14 +34,6 @@ Usage is simple. Configure your DI to inject ```IConfiguration``` using the Map 
 
 Anything the System.Convert class can handle is accepted, in addition to enums.
 
-Efficiency
-------
-
-ConfigMapper is thread-safe, and only one concrete instance from an interface is ever generated, meaning you can call the ```Map<T>``` method any number of times in your code without increased memory usage.
-
-Config Change Handling
-------
-
-Call ```ConfigMapper.RefreshConfiguration``` if your configuration has changed. Any previously mapped objects will be updated with the latest values from your configuration without needing to re-map them.
+To see more features please see the project home page: <http://configmapper.org/>
 
 Comments/questions/bugs are very welcome, please forward them to me. Thanks!
