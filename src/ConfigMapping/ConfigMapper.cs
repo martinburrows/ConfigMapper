@@ -15,10 +15,18 @@ namespace ConfigMapping
         }
 
         /// <summary>
+        /// Returns an implementation of the given interface with properties populated from appSettings.
+        /// </summary>
+        public static T Map<T>()
+        {
+            return Map<T>(MapFrom.AppSettings);
+        }
+
+        /// <summary>
         /// Returns an implementation of the given interface with properties populated from the specified source or config section.
         /// </summary>
         /// <param name="mapfrom">The config mapping source</param>
-        public static T Map<T>(MapFrom mapfrom = MapFrom.AppSettings)
+        public static T Map<T>(MapFrom mapfrom)
         {
             switch (mapfrom)
             {
@@ -36,7 +44,10 @@ namespace ConfigMapping
             }
         }
 
-        [Obsolete("Map<>(MapFrom.ConnectionStrings) can be used instead", false)]
+        /// <summary>
+        /// Returns an implementation of the given interface with properties populated from connectionStrings.
+        /// </summary>
+        [Obsolete("Map<T>(MapFrom.ConnectionStrings) can be used instead", false)]
         public static T MapConnectionStrings<T>()
         {
             return Map<T>(MapFrom.ConnectionStrings);
