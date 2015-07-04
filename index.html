@@ -4,7 +4,7 @@
   <head>
     <meta charset='utf-8'>
     <meta http-equiv="X-UA-Compatible" content="chrome=1">
-    <meta name="description" content="ConfigMapper : Simple .NET config to object mapping">
+    <meta name="description" content="ConfigMapper : Simple .NET config to object mapping with no magic strings">
 
     <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
 
@@ -19,7 +19,7 @@
           <a id="forkme_banner" href="https://github.com/martinburrows/ConfigMapper">View on GitHub</a>
 
           <h1 id="project_title">ConfigMapper</h1>
-          <h2 id="project_tagline">Simple .NET config to object mapping</h2>
+          <h2 id="project_tagline">Simple .NET config to object mapping with no magic strings</h2>
 
             <section id="downloads">
               <a class="zip_download_link" href="https://github.com/martinburrows/ConfigMapper/zipball/master">Download this project as a .zip file</a>
@@ -43,8 +43,9 @@
 
 <ul>
 <li>Supports mapping from <strong>appSettings</strong>, <strong>connectionStrings</strong> and <strong>environment variables</strong>.</li>
-<li>No magic strings - avoid run-time errors from typos.</li>
-<li>Provides interfaced configuration objects, allowing your strongly-typed <code>IConfiguration</code> to be injected anywhere in a unit-testable manner.</li>
+<li>
+<strong>No magic strings</strong> - avoid run-time errors from typos.</li>
+<li>Provides an interfaced <strong>POCO</strong> (plain old CLR object), allowing your strongly-typed <code>IConfiguration</code> to be injected anywhere in a unit-testable manner.</li>
 <li>Refactor-friendly - renaming settings is simple.</li>
 <li>Find usages easily.</li>
 </ul>
