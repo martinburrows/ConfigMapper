@@ -31,26 +31,30 @@
     <!-- MAIN CONTENT -->
     <div id="main_content_wrap" class="outer">
       <section id="main_content" class="inner">
-        <h3>
+        <h2>
+<a id="turn-this" class="anchor" href="#turn-this" aria-hidden="true"><span class="octicon octicon-link"></span></a>Turn this...</h2>
+
+<p><code>var mySetting = ConfigurationManager.AppSettings["MySetting"];</code></p>
+
+<h2>
+<a id="into-this" class="anchor" href="#into-this" aria-hidden="true"><span class="octicon octicon-link"></span></a>...into this:</h2>
+
+<p><code>var mySetting = Configuration.AppSettings.MySetting;</code></p>
+
+<ul>
+<li>No magic strings - avoid run-time errors from typos.</li>
+<li>Refactor-friendly - renaming settings is simple.</li>
+<li>Find usages easily.</li>
+<li>Supports mapping from appSettings, connectionStrings and environment variables.</li>
+<li>Provides interfaced configuration objects, allowing your <code>IConfiguration</code> to be injected anywhere n a unit-testable manner.</li>
+</ul>
+
+<h3>
 <a id="install-from-nuget" class="anchor" href="#install-from-nuget" aria-hidden="true"><span class="octicon octicon-link"></span></a>Install from <a href="https://www.nuget.org/packages/ConfigMapper">NuGet</a>
 </h3>
 
 <pre><code>PM&gt; Install-Package ConfigMapper
 </code></pre>
-
-<h5>
-<a id="turn-this" class="anchor" href="#turn-this" aria-hidden="true"><span class="octicon octicon-link"></span></a>Turn this...</h5>
-
-<pre><code>var mySetting = ConfigurationManager.AppSettings["MySetting"];
-</code></pre>
-
-<h5>
-<a id="into-this" class="anchor" href="#into-this" aria-hidden="true"><span class="octicon octicon-link"></span></a>...into this...</h5>
-
-<pre><code>var mySetting = Configuration.AppSettings.MySetting;
-</code></pre>
-
-<p>ConfigMapper provides interfaced configuration objects with properties mapped from environment variables, <code>appSettings</code> or  <code>connectionStrings</code>, allowing your <code>IConfiguration</code> to be injected anywhere in your code in a unit-testable manner with no <a href="http://www.wekeroad.com/2011/03/10/are-friends-immutable/">magic strings</a> in sight.</p>
 
 <h4>
 <a id="usage-is-simple" class="anchor" href="#usage-is-simple" aria-hidden="true"><span class="octicon octicon-link"></span></a>Usage is simple.</h4>
